@@ -1,7 +1,7 @@
 {
     "name" : "simple weather application",
     "short_name" : "weather app",
-    "start_url" : "/index.html",
+    "start_url" : "https://deksa89.github.io/PWA-Simple-Weather-App/",
     "display" : "standalone",
     "background_color" : "#FFE9D2",
     "theme_color" : "#FFE1C4",
