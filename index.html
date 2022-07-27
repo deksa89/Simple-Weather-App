@@ -9,22 +9,23 @@
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
     <link rel="manifest" href="./manifest.json" />
-    <script src="./appService.js" defer></script>
 </head>
 <body>
     <main id="body-bg">
         <div class="upper">
-            <h2 id="naslov">Simple Weather Application</h2>
+            <h2 id="naslov">Simple Weather Application</h2> 
         </div>
         
         <div class="lower">
+            <button type="button" id="del-cache">Delete cache</button>
             <div class="inp-btn">
                 <input id="input" type="text" placeholder="Search cities">
                 <button type="button" id="button">Search</button>
             </div>
-            <!-- <p>zagreb tokyo berlin</p> -->
             <div id="content"></div>
-            
+            <div id="novo"></div>
+            <button type="button" id="forecast-button">3 day forecast</button>
+            <div id="forForecast"></div>
         </div>
 
     </main>

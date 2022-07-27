@@ -1,45 +1,48 @@
-const cacheName = "weatherApp-v1";
-
-const OFFLINE_URL = "./offline.html";
+const cacheName = "DEKSINA-APP";
 
 // instalacija service worker-a
 self.addEventListener("install", (event) => {
   console.log("service worker has been installed");
-  event.waitUntil((async() => {
-    const cache = await caches.open(cacheName);
-    console.log("[Service Worker] Caching all: app shell and content");
-    await cache.add(new Request(OFFLINE_URL, {cache: "reload"}))
-  })()
+  event.waitUntil(
+    (async () => {
+      // console.log("event", event)
+      const cache = await caches.open(cacheName);
+      // console.log("[Service Worker] Caching all: app shell and content");
+    })()
   );
+  // Force the waiting service worker to become the active service worker.
+  self.skipWaiting();
 });
 
-// listening aktivacijskog eventa service worker-a
-// self.addEventListener("activate", (event) => {
-//   console.log("service worker has been activated");
-// });
 
+self.addEventListener("fetch", (e) => {
+  e.respondWith((async () => {
+    try{   
+      const cache = await caches.open(cacheName)
 
-//ovo treba popraviti
-self.addEventListener("fetch", (e)=>{
-    e.respondWith((async ()=> {
+      const response = await fetch(e.request)
+      
+      let myClone = response.clone()
+      const newHeader = new Headers(myClone.headers);
+      newHeader.set("cache", "true");
+      const newResponse = new Response(myClone.body, {
+        headers: newHeader
+      })
+      cache.put(e.request, newResponse)
+      return response
+    }
 
-
-      // ovaj dio koda provjerava da li je traženi pojam u cache-u 
-      const r = await caches.match(e.request);
-      console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+    catch(error){
+      const r = await caches.match(e.request)
+      
       if(r) {
-          console.log("nasao u cache-u")
-          return r;
-      }
-
-      // ovaj dio koda sprema podatke u cache ako prethodno pojam nije pronaden u cache-u 
-      const response = await fetch(e.request);
-      const cache = await caches.open(cacheName);
-      console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-      cache.put(e.request, response.clone());
-      console.log("nisam nasao u cache-u, spremam nađeno")
-      return response;
-
-    })());
-})
-
+        const client = await clients.get(e.clientId);
+        client.postMessage({
+          msg: "Hey I just got a fetch from you!",
+          url: e.request.url,
+        });
+        return r
+      }      
+    }
+  })());
+});
