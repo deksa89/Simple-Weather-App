@@ -111,6 +111,8 @@ async function weatherApi(grad) {
 
 // ------------------------------FUNKCIJE------------------------------------ //
 
+// brise prethodni sadrzaj iz inputa
+
 // napisati kod za izbrisati prognozu 
 function removeContent(el){
   if (el !== undefined){
