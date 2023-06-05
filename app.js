@@ -112,6 +112,7 @@ async function weatherApi(grad) {
 // ------------------------------FUNKCIJE------------------------------------ //
 
 // brise prethodni sadrzaj iz inputa
+var nekaLozinka = "blabla20202-jojo"
 
 // napisati kod za izbrisati prognozu 
 function removeContent(el){
